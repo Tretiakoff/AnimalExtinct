@@ -1,4 +1,4 @@
-package com.example.tretiakoff.animal_extinct.Model;
+package com.example.tretiakoff.animal_extinct.Model.Arkive;
 
 /**
  * Created by tretiakoff on 06/06/2018.

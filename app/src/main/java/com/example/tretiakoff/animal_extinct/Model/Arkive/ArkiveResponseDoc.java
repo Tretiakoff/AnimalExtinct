@@ -1,4 +1,4 @@
-package com.example.tretiakoff.animal_extinct.Model;
+package com.example.tretiakoff.animal_extinct.Model.Arkive;
 
 import java.util.ArrayList;
 
@@ -50,7 +50,40 @@ public class ArkiveResponseDoc {
     private String nameCommon;
     private String nameScientific;
     private int iUCNId;
+
+    public ArrayList<String> getFolksonomyGroups() {
+        return folksonomyGroups;
+    }
+
+    public void setFolksonomyGroups(ArrayList<String> folksonomyGroups) {
+        this.folksonomyGroups = folksonomyGroups;
+    }
+
     private ArrayList<String> folksonomyGroups = null;
+
+    public String getiUCNStatus() {
+        return iUCNStatus;
+    }
+
+    public void setiUCNStatus(String iUCNStatus) {
+        this.iUCNStatus = iUCNStatus;
+    }
+
+    public String getNameCommon() {
+        return nameCommon;
+    }
+
+    public void setNameCommon(String nameCommon) {
+        this.nameCommon = nameCommon;
+    }
+
+    public String getNameScientific() {
+        return nameScientific;
+    }
+
+    public void setNameScientific(String nameScientific) {
+        this.nameScientific = nameScientific;
+    }
 
     public String getThumbnailURL() {
         return thumbnailURL;
