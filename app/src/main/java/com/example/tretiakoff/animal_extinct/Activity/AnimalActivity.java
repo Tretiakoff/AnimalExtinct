@@ -44,7 +44,7 @@ public class AnimalActivity extends AppCompatActivity {
 
     private void getContent(String name) {
         Arkive service = Client.getArkiveClient();
-        retrofit2.Call call = service.getImage("doctype:species and "+name, "1", "json");
+        retrofit2.Call call = service.getImage("doctype:species and "+name.toUpperCase(), "1", "json");
         call.enqueue(new Callback<ArkiveResult>() {
 
             @Override
