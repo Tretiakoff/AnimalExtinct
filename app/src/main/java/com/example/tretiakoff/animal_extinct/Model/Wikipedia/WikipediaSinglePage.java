@@ -4,9 +4,9 @@ package com.example.tretiakoff.animal_extinct.Model.Wikipedia;
  * Created by tretiakoff on 06/06/2018.
  */
 
-public class WikipediaSinglePageResult {
+public class WikipediaSinglePage {
 
-    public WikipediaSinglePageResult(int pageid, int ns, String title, String extract) {
+    public WikipediaSinglePage(int pageid, int ns, String title, String extract) {
         this.pageid = pageid;
         this.ns = ns;
         this.title = title;

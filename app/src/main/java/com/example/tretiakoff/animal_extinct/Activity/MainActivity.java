@@ -12,6 +12,7 @@ import com.example.tretiakoff.animal_extinct.R;
 public class MainActivity extends AppCompatActivity {
 
     private Button searchBtn;
+    private Button listBtn;
     private EditText searchText;
 
     @Override
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
         searchText = (EditText)findViewById(R.id.animalSearchText);
 
         searchBtn = findViewById(R.id.animalSearchBtn);
+        listBtn = findViewById(R.id.animalListBtn);
 
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -30,6 +32,15 @@ public class MainActivity extends AppCompatActivity {
                 Bundle b = new Bundle();
                 b.putString("name", searchText.getText().toString()); //Your id
                 myIntent.putExtras(b); //Put your id to your next Intent
+                startActivity(myIntent);
+                finish();
+            }
+        });
+
+        listBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent = new Intent(MainActivity.this, AnimalListActivity.class);
                 startActivity(myIntent);
                 finish();
             }

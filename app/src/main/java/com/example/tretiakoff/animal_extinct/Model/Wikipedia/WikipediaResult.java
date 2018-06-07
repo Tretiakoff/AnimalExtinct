@@ -6,19 +6,19 @@ package com.example.tretiakoff.animal_extinct.Model.Wikipedia;
 
 public class WikipediaResult {
 
-    public WikipediaResult(String batchcomplete, WikipediaQueryResult query) {
+    public WikipediaResult(String batchcomplete, WikipediaQuery query) {
         this.batchcomplete = batchcomplete;
         this.query = query;
     }
 
-    public WikipediaQueryResult getQuery() {
+    public WikipediaQuery getQuery() {
         return query;
     }
 
-    public void setQuery(WikipediaQueryResult query) {
+    public void setQuery(WikipediaQuery query) {
         this.query = query;
     }
 
     private String batchcomplete;
-    private WikipediaQueryResult query;
+    private WikipediaQuery query;
 }
