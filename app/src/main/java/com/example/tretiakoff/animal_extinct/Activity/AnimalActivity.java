@@ -5,11 +5,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.tretiakoff.animal_extinct.API.Arkive;
 import com.example.tretiakoff.animal_extinct.API.Client;
-import com.example.tretiakoff.animal_extinct.Model.ArkiveResponse;
-import com.example.tretiakoff.animal_extinct.Model.ArkiveResult;
+import com.example.tretiakoff.animal_extinct.API.Wikipedia;
+import com.example.tretiakoff.animal_extinct.Model.Arkive.ArkiveResponseDoc;
+import com.example.tretiakoff.animal_extinct.Model.Arkive.ArkiveResult;
+import com.example.tretiakoff.animal_extinct.Model.Wikipedia.WikipediaResult;
 import com.example.tretiakoff.animal_extinct.R;
 import com.squareup.picasso.Picasso;
 
@@ -20,6 +23,11 @@ import retrofit2.Response;
 public class AnimalActivity extends AppCompatActivity {
 
     ImageView imageView;
+    TextView enNameView;
+    TextView scientificNameView;
+    TextView classificationView;
+    TextView IUCNStatusView;
+    TextView descriptionView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,32 +36,43 @@ public class AnimalActivity extends AppCompatActivity {
         String name = b.getString("name");
         setContentView(R.layout.activity_animal);
         imageView = (ImageView) findViewById(R.id.imageView);
-//        String test = "<a href=\\\"http://www.arkive.org/grey-wolf/canis-lupus/image-G57747.html#src=portletV3api\\\" title=\\\"Arkive image - Arctic wolf with pup near den\\\" ><img src=\\\"https://53744bf91d44b81762e0-fbbc959d4e21c00b07dbe9c75f9c0b63.ssl.cf3.rackcdn.com/media/3B/3BC91E34-AC18-45B3-BFC3-10725A395CB3/Presentation.Portlet/Arctic-wolf-with-pup-near-den.jpg\\\" alt=\\\"Arkive image - Arctic wolf with pup near den\\\" title=\\\"Arkive image - Arctic wolf with pup near den\\\" border=\\\"0\\\"/></a>";
-//        ArkiveUrl arkiveResult = new ArkiveUrl(test);
-//
-//        String url = arkiveResult.getImageUrl();
-//
-//        Picasso.with(getBaseContext()).load(url).into(imageView);
 
         getUrl(name);
     }
 
 
     private void getUrl(String name) {
-        Arkive service = Client.getClient();
-        retrofit2.Call call = service.getImage("doctype:image and "+name, "1", "json");
+        Arkive service = Client.getArkiveClient();
+        retrofit2.Call call = service.getImage("doctype:species and "+name, "1", "json");
         call.enqueue(new Callback<ArkiveResult>() {
 
             @Override
             public void onResponse(Call<ArkiveResult> call, Response<ArkiveResult> response) {
-                Log.d("resp", response.toString());
-                Log.d("SUCCES", "SUCCES");
                 if (response.code() == 200) {
                     ArkiveResult result = response.body();
-                    String imageUrl = result.getResponse().getDocs().get(0).getThumbnailURL();
-                    String url = result.getResponse().getDocs().get(0).getImageUrl(result.getResponse().getDocs().get(0).getThumbnailURL());
-                    imageView = (ImageView) findViewById(R.id.imageView);
+                    ArkiveResponseDoc doc = result.getResponse().getDocs().get(0);
+                    String imageUrl = doc.getThumbnailURL();
+                    String url = doc.getImageUrl(imageUrl);
+
+                    getContent(doc.getNameCommon());
+
+                    imageView = findViewById(R.id.imageView);
                     Picasso.with(getBaseContext()).load(url).into(imageView);
+
+                    enNameView =  findViewById(R.id.enName);
+                    enNameView.setText(doc.getNameCommon());
+
+                    scientificNameView = findViewById(R.id.scientificName);
+                    scientificNameView.setText(doc.getNameScientific());
+
+                    classificationView = findViewById(R.id.classificaition);
+                    classificationView.setText(doc.getFolksonomyGroups().get(0));
+
+                    Log.d("IUCN", doc.getiUCNStatus());
+
+                    IUCNStatusView = findViewById(R.id.IUCNStatus);
+                    IUCNStatusView.setText(doc.getiUCNStatus().toString());
+
 
                 } else {
                     Log.d("error", "error");
@@ -62,7 +81,41 @@ public class AnimalActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call call, Throwable t) {
-                Log.e("ERROR", "THERE IS AN ERROR");
+                Log.d("ERROR", t.getMessage());
+            }
+        });
+
+    }
+
+    private void getContent(String name) {
+        Wikipedia service = Client.getWikipediaClient();
+        retrofit2.Call call = service.getContent("json", "query", "extracts", "l", "l", name);
+        call.enqueue(new Callback<WikipediaResult>() {
+            @Override
+            public void onResponse(Call<WikipediaResult> call, Response<WikipediaResult> response) {
+                Log.d("RESP", response.body().toString());
+                if (response.code() == 200) {
+                    WikipediaResult result = response.body();
+//                    WikipediaQueryResult query = result.getQuery();
+//                    WikipediaPageResult page = query.getPages();
+//                    WikipediaSinglePageResult bl = page
+//                    Log.d("COUNT", page);
+
+                    Log.d("CONTENT", result.getQuery().getWikipediaSinglePageResult().getExtract());
+                    String content = result.getQuery().getWikipediaSinglePageResult().getExtract();
+
+                    descriptionView = findViewById(R.id.description);
+                    descriptionView.setText(content);
+
+
+                } else {
+                    Log.d("error", response.body().toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                Log.e("ERROR", t.getMessage());
             }
         });
 

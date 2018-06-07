@@ -1,4 +1,4 @@
-package com.example.tretiakoff.animal_extinct.Model;
+package com.example.tretiakoff.animal_extinct.Model.Arkive;
 
 import java.util.ArrayList;
 
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class ArkiveResponseDoc {
 
-    public ArkiveResponseDoc(String mediaCaption, boolean imageLandscape, boolean videoWidescreen, String vaultGuid, String kalturaId, int mediaLicense, boolean embedPermitted, int exchangeId, String id, String title, String dateModified, String accessionsGroup, String iUCNStatus, String nameCommon, String nameScientific, int iUCNId, ArrayList<String> folksonomyGroups, String thumbnailURL, String thumbnailCaption, String shortDescription, String doctype, String warehouseId, int version) {
+    public ArkiveResponseDoc(String mediaCaption, boolean imageLandscape, boolean videoWidescreen, String vaultGuid, String kalturaId, int mediaLicense, boolean embedPermitted, int exchangeId, String id, String title, String dateModified, String accessionsGroup, String IUCNStatus, String nameCommon, String nameScientific, int iUCNId, ArrayList<String> folksonomyGroups, String thumbnailURL, String thumbnailCaption, String shortDescription, String doctype, String warehouseId, int version) {
         this.mediaCaption = mediaCaption;
         this.imageLandscape = imageLandscape;
         this.videoWidescreen = videoWidescreen;
@@ -21,7 +21,7 @@ public class ArkiveResponseDoc {
         this.title = title;
         this.dateModified = dateModified;
         this.accessionsGroup = accessionsGroup;
-        this.iUCNStatus = iUCNStatus;
+        this.IUCNStatus = IUCNStatus;
         this.nameCommon = nameCommon;
         this.nameScientific = nameScientific;
         this.iUCNId = iUCNId;
@@ -46,11 +46,44 @@ public class ArkiveResponseDoc {
     private String title;
     private String dateModified;
     private String accessionsGroup;
-    private String iUCNStatus;
+    private String IUCNStatus;
     private String nameCommon;
     private String nameScientific;
     private int iUCNId;
+
+    public ArrayList<String> getFolksonomyGroups() {
+        return folksonomyGroups;
+    }
+
+    public void setFolksonomyGroups(ArrayList<String> folksonomyGroups) {
+        this.folksonomyGroups = folksonomyGroups;
+    }
+
     private ArrayList<String> folksonomyGroups = null;
+
+    public String getiUCNStatus() {
+        return IUCNStatus;
+    }
+
+    public void setiUCNStatus(String iUCNStatus) {
+        this.IUCNStatus = iUCNStatus;
+    }
+
+    public String getNameCommon() {
+        return nameCommon;
+    }
+
+    public void setNameCommon(String nameCommon) {
+        this.nameCommon = nameCommon;
+    }
+
+    public String getNameScientific() {
+        return nameScientific;
+    }
+
+    public void setNameScientific(String nameScientific) {
+        this.nameScientific = nameScientific;
+    }
 
     public String getThumbnailURL() {
         return thumbnailURL;
