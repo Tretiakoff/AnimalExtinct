@@ -1,5 +1,4 @@
 <resources>
     <string name="app_name">Wild Planete Nature</string>
-    <string name="homepage_WelcomeText">To know, Love and Protect animals from the world</string>
-    <string name="placehoder_family_filter">Family</string>
+    <string name="homepage_WelcomeText" >To know, Love and Protect animals from the world</string>
 </resources>
