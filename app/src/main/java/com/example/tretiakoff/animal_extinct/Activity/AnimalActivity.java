@@ -68,8 +68,10 @@ public class AnimalActivity extends AppCompatActivity {
                     classificationView = findViewById(R.id.classificaition);
                     classificationView.setText(doc.getFolksonomyGroups().get(0));
 
+                    Log.d("IUCN", doc.getiUCNStatus());
+
                     IUCNStatusView = findViewById(R.id.IUCNStatus);
-                    IUCNStatusView.setText(doc.getiUCNStatus());
+                    IUCNStatusView.setText(doc.getiUCNStatus().toString());
 
 
                 } else {
