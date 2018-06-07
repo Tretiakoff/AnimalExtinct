@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">animal_extinct</string>
+    <string name="app_name">Wild Planete Nature</string>
+    <string name="homepage_WelcomeText" >To know, Love and Protect animals from the world</string>
 </resources>
