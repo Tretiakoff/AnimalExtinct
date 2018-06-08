@@ -57,13 +57,15 @@ public class ThreatsActivity extends AppCompatActivity {
             public void onResponse(Call<IUCNResponse> call, Response<IUCNResponse> response) {
                 if (response.code() == 200) {
                     IUCNResponse result = response.body();
-                    IUCNResult data = result.getResult().get(0);
+
                     nameView.setText(result.getName());
 
                     if (result.getResult().size() == 0){
-                        threatsView.setText("No threats information.");
+                        threatsView.setText("@string/noThreats");
+                        return;
 
                     }
+                    IUCNResult data = result.getResult().get(0);
 
                     threatsView.setText(android.text.Html.fromHtml(data.getThreats()).toString());
 
