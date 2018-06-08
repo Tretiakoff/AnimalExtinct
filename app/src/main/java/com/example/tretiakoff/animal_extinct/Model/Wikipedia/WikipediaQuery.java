@@ -3,27 +3,25 @@ package com.example.tretiakoff.animal_extinct.Model.Wikipedia;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Created by tretiakoff on 06/06/2018.
  */
 
-public class WikipediaQueryResult {
+public class WikipediaQuery {
 
-    public WikipediaQueryResult(Map<String, WikipediaSinglePageResult> result) {
+    public WikipediaQuery(Map<String, WikipediaSinglePage> result) {
         this.result = result;
     }
 
     @SerializedName("pages")
     @Expose
-    private Map<String, WikipediaSinglePageResult> result;
+    private Map<String, WikipediaSinglePage> result;
 
-    public WikipediaSinglePageResult getWikipediaSinglePageResult()
+    public WikipediaSinglePage getWikipediaSinglePageResult()
     {
-        for(WikipediaSinglePageResult wiki : result.values())
+        for(WikipediaSinglePage wiki : result.values())
         {
             return wiki;
         }

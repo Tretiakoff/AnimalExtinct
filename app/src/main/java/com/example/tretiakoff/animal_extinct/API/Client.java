@@ -39,4 +39,19 @@ public class Client {
         return retrofit.create(Wikipedia.class);
     }
 
+    public static ArkiveFilters getArkiveFiltersClient() {
+
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(ArkiveFilters.BASE_URL)
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        return retrofit.create(ArkiveFilters.class);
+    }
+
 }

@@ -13,6 +13,7 @@ import com.example.tretiakoff.animal_extinct.API.Wikipedia;
 import com.example.tretiakoff.animal_extinct.Model.Arkive.ArkiveResponseDoc;
 import com.example.tretiakoff.animal_extinct.Model.Arkive.ArkiveResult;
 import com.example.tretiakoff.animal_extinct.Model.Wikipedia.WikipediaResult;
+import com.example.tretiakoff.animal_extinct.Model.Wikipedia.WikipediaSinglePage;
 import com.example.tretiakoff.animal_extinct.R;
 import com.squareup.picasso.Picasso;
 
@@ -37,11 +38,11 @@ public class AnimalActivity extends AppCompatActivity {
         setContentView(R.layout.activity_animal);
         imageView = (ImageView) findViewById(R.id.imageView);
 
-        getUrl(name);
+        getContent(name);
     }
 
 
-    private void getUrl(String name) {
+    private void getContent(String name) {
         Arkive service = Client.getArkiveClient();
         retrofit2.Call call = service.getImage("doctype:species and "+name.toUpperCase(), "1", "json");
         call.enqueue(new Callback<ArkiveResult>() {
@@ -51,10 +52,14 @@ public class AnimalActivity extends AppCompatActivity {
                 if (response.code() == 200) {
                     ArkiveResult result = response.body();
                     ArkiveResponseDoc doc = result.getResponse().getDocs().get(0);
+
+                    if (doc == null){
+                        return;
+                    }
                     String imageUrl = doc.getThumbnailURL();
                     String url = doc.getImageUrl(imageUrl);
 
-                    getContent(doc.getNameCommon());
+                    getDescription(doc.getNameCommon());
 
                     imageView = findViewById(R.id.imageView);
                     Picasso.with(getBaseContext()).load(url).into(imageView);
@@ -68,40 +73,38 @@ public class AnimalActivity extends AppCompatActivity {
                     classificationView = findViewById(R.id.classificaition);
                     classificationView.setText(doc.getFolksonomyGroups().get(0));
 
-                    Log.d("IUCN", doc.getiUCNStatus());
-
                     IUCNStatusView = findViewById(R.id.IUCNStatus);
                     IUCNStatusView.setText(doc.getiUCNStatus().toString());
 
 
                 } else {
                     Log.d("error", "error");
+                    return;
                 }
             }
 
             @Override
             public void onFailure(Call call, Throwable t) {
                 Log.d("ERROR", t.getMessage());
+                return;
             }
         });
 
     }
 
-    private void getContent(String name) {
+    private void getDescription(String name) {
         Wikipedia service = Client.getWikipediaClient();
         retrofit2.Call call = service.getContent("json", "query", "extracts", "l", "l", name);
         call.enqueue(new Callback<WikipediaResult>() {
             @Override
             public void onResponse(Call<WikipediaResult> call, Response<WikipediaResult> response) {
-                Log.d("RESP", response.body().toString());
                 if (response.code() == 200) {
                     WikipediaResult result = response.body();
-//                    WikipediaQueryResult query = result.getQuery();
-//                    WikipediaPageResult page = query.getPages();
-//                    WikipediaSinglePageResult bl = page
-//                    Log.d("COUNT", page);
+                    WikipediaSinglePage page = result.getQuery().getWikipediaSinglePageResult();
 
-                    Log.d("CONTENT", result.getQuery().getWikipediaSinglePageResult().getExtract());
+                    if (page == null) {
+                        return;
+                    }
                     String content = result.getQuery().getWikipediaSinglePageResult().getExtract();
 
                     descriptionView = findViewById(R.id.description);
@@ -116,6 +119,7 @@ public class AnimalActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call call, Throwable t) {
                 Log.e("ERROR", t.getMessage());
+                return;
             }
         });
 
@@ -125,6 +129,5 @@ public class AnimalActivity extends AppCompatActivity {
         Intent myIntent = new Intent(AnimalActivity.this, MainActivity.class);
         startActivity(myIntent);
         finish();
-
     }
 }

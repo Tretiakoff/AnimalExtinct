@@ -86,7 +86,10 @@ public class ArkiveResponseDoc {
     }
 
     public String getThumbnailURL() {
-        return thumbnailURL;
+
+        String url = thumbnailURL.replace("Thumb", "Large");
+
+        return url;
     }
 
     public void setThumbnailURL(String thumbnailURL) {
