@@ -13,4 +13,6 @@
     <string name="threat_button">threats</string>
     <string name="not_found_animal">Sorry, unknown animal</string>
     <string name="noThreats">No Threats for this animal</string>
+    <string name="threat_button">threat</string>
+    <string name="not_found_animal">Sorry, unknown animal</string>
 </resources>
