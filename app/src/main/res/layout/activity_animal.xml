@@ -62,9 +62,11 @@
                 android:id="@+id/classification_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:text="@string/classification_title"
                 android:textAllCaps="true"
                 android:textColor="#A8C12D"
+                android:textSize="24dp"
                 app:fontFamily="@font/roboto_bold" />
 
             <TextView
@@ -72,6 +74,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
+                android:paddingTop="7dp"
+                android:textSize="20dp"
                 app:fontFamily="@font/roboto"
                 tools:layout_editor_absoluteX="211dp"
                 tools:layout_editor_absoluteY="162dp"
@@ -82,9 +86,11 @@
                 android:id="@+id/icun"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingTop="15dp"
                 android:text="@string/icun_title"
                 android:textAllCaps="true"
                 android:textColor="#A8C12D"
+                android:textSize="24dp"
                 app:fontFamily="@font/roboto_bold" />
 
             <TextView
@@ -92,6 +98,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
+                android:paddingTop="7dp"
+                android:textSize="20dp"
                 app:fontFamily="@font/roboto"
                 tools:layout_editor_absoluteX="75dp"
                 tools:layout_editor_absoluteY="202dp"
@@ -102,9 +110,11 @@
                 android:id="@+id/description_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingTop="15dp"
                 android:text="@string/description_title"
                 android:textAllCaps="true"
                 android:textColor="#A8C12D"
+                android:textSize="24dp"
                 app:fontFamily="@font/roboto_bold" />
 
 
@@ -112,6 +122,8 @@
                 android:id="@+id/description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingTop="7dp"
+                android:textSize="20dp"
                 app:fontFamily="@font/roboto"
                 tools:layout_editor_absoluteX="55dp"
                 tools:layout_editor_absoluteY="109dp"
@@ -121,7 +133,7 @@
                 android:id="@+id/threatsBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Menaces" />
+                android:text="@string/threat_button" />
 
         </LinearLayout>
     </ScrollView>

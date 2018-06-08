@@ -10,4 +10,6 @@
     <string name="description_title">Description</string>
     <string name="description">Description</string>
     <string name="icun_title">Extinguishing Levels</string>
+    <string name="threat_button">threat</string>
+    <string name="not_found_animal">Sorry, unknown animal</string>
 </resources>
