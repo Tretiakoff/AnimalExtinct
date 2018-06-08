@@ -69,5 +69,9 @@ public class SearchFiltersActivity extends AppCompatActivity {
         });
     }
 
-
+    public void onBackPressed(){
+        Intent myIntent = new Intent(SearchFiltersActivity.this, MainActivity.class);
+        startActivity(myIntent);
+        finish();
+    }
 }

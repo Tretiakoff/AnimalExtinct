@@ -12,9 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.MainActivity">
-
-        </activity>
+        <activity android:name=".Activity.MainActivity"></activity>
         <activity android:name=".Activity.AnimalActivity" />
         <activity android:name=".Activity.HomeActivity">
             <intent-filter>
@@ -27,9 +25,11 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
         <activity android:name=".Activity.AnimalListActivity" />
         <activity android:name=".Activity.SearchFiltersActivity" />
-        <activity android:name=".Activity.AnimalDetailActivity"></activity>
+        <activity android:name=".Activity.AnimalDetailActivity" />
+        <activity android:name=".Activity.ThreatsActivity"></activity>
     </application>
 
 </manifest>

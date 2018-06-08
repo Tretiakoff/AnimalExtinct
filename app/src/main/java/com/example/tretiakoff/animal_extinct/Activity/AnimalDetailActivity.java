@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -30,6 +32,8 @@ public class AnimalDetailActivity extends AppCompatActivity {
     String initialStatus;
     String initialLocation;
     String initialFamily;
+    Button threatsBtn;
+    String url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,12 +52,13 @@ public class AnimalDetailActivity extends AppCompatActivity {
         initialFamily = b.getString("initialFamily");
 
         imageView = findViewById(R.id.imageView);
+        url = imageUrl;
 
         Picasso.with(getBaseContext())
                 .load(imageUrl)
                 .placeholder(R.drawable.placeholder)
                 .into(imageView);
-
+        threatsBtn = findViewById(R.id.threatsBtn);
         enNameView =  findViewById(R.id.enName);
         enNameView.setText(enName);
 
@@ -67,6 +72,18 @@ public class AnimalDetailActivity extends AppCompatActivity {
         IUCNStatusView.setText(status);
 
         getDescription(enName);
+
+        threatsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent = new Intent(AnimalDetailActivity.this, ThreatsActivity.class);
+                Bundle b = new Bundle();
+                b.putString("name", scientificNameView.getText().toString());
+                myIntent.putExtras(b);
+                startActivity(myIntent);
+                finish();
+            }
+        });
     }
 
     private void getDescription(String name) {

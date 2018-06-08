@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -29,6 +31,8 @@ public class AnimalActivity extends AppCompatActivity {
     TextView classificationView;
     TextView IUCNStatusView;
     TextView descriptionView;
+    Button threatsBtnView;
+    String imageUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +40,22 @@ public class AnimalActivity extends AppCompatActivity {
         Bundle b = getIntent().getExtras();
         String name = b.getString("name");
         setContentView(R.layout.activity_animal);
-        imageView = (ImageView) findViewById(R.id.imageView);
+        imageView = findViewById(R.id.imageView);
+        threatsBtnView = findViewById(R.id.threatsBtn);
 
         getContent(name);
+
+        threatsBtnView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent = new Intent(AnimalActivity.this, ThreatsActivity.class);
+                Bundle b = new Bundle();
+                b.putString("name", scientificNameView.getText().toString());
+                myIntent.putExtras(b);
+                startActivity(myIntent);
+                finish();
+            }
+        });
     }
 
 
@@ -61,6 +78,7 @@ public class AnimalActivity extends AppCompatActivity {
 
                     getDescription(doc.getNameCommon());
 
+                    imageUrl = url;
                     imageView = findViewById(R.id.imageView);
                     Picasso.with(getBaseContext()).load(url).into(imageView);
 
