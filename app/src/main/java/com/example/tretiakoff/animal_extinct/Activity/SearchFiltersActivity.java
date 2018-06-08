@@ -46,7 +46,7 @@ public class SearchFiltersActivity extends AppCompatActivity {
         statusDropdown.setAdapter(statusAdapter);
 
         locationDropdown = findViewById(R.id.locationSelect);
-        String[] locations = new String[]{"All", "USA", "France", "Brasil", "China", "Australia", "Peru", "Morocco", "Norway"};
+        String[] locations = new String[]{"All", "USA", "France", "China", "Australia", "Peru", "Morocco", "Norway"};
         ArrayAdapter<String> locationAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, locations);
         locationDropdown.setAdapter(locationAdapter);
 
