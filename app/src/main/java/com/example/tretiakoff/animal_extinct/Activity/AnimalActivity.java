@@ -70,6 +70,18 @@ public class AnimalActivity extends AppCompatActivity {
             public void onResponse(Call<ArkiveResult> call, Response<ArkiveResult> response) {
                 if (response.code() == 200) {
                     ArkiveResult result = response.body();
+                    Log.d("OKOKOOKOK", result.getResponse().getDocs().toString());
+                    if(result.getResponse().getDocs().toString() == "[]"){
+                        Log.d("OKOKOOKOK", "OKOKOKO");
+                        Intent myIntent = new Intent(AnimalActivity.this, MainActivity.class);
+                        Bundle b = new Bundle();
+                        b.putString("source", "noResult");
+                        myIntent.putExtras(b);
+                        startActivity(myIntent);
+                        finish();
+                        return;
+                    }
+
                     ArkiveResponseDoc doc = result.getResponse().getDocs().get(0);
 
                     if (doc == null){
@@ -145,6 +157,10 @@ public class AnimalActivity extends AppCompatActivity {
 
     public void onBackPressed(){
         Intent myIntent = new Intent(AnimalActivity.this, MainActivity.class);
+        Bundle b = new Bundle();
+        b.putString("source", "animal");
+        myIntent.putExtras(b);
+        startActivity(myIntent);
         startActivity(myIntent);
         finish();
     }

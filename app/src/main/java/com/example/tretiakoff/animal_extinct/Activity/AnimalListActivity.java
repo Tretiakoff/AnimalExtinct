@@ -474,6 +474,7 @@ public class AnimalListActivity extends AppCompatActivity implements AnimalRecyc
         b.putString("enName", animal.getNameCommon());
         b.putString("scientificName", animal.getNameScientific());
         b.putString("status", animal.getiUCNStatus());
+        b.putString("classification", animal.getFolksonomyGroups().get(0));
         b.putString("initialStatus", status);
         b.putString("initialLocation", location);
         b.putString("initialFamily", family);

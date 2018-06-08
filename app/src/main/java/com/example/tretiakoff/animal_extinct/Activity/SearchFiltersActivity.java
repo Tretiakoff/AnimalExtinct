@@ -71,6 +71,10 @@ public class SearchFiltersActivity extends AppCompatActivity {
 
     public void onBackPressed(){
         Intent myIntent = new Intent(SearchFiltersActivity.this, MainActivity.class);
+        Bundle b = new Bundle();
+        b.putString("source", "search");
+        myIntent.putExtras(b);
+        startActivity(myIntent);
         startActivity(myIntent);
         finish();
     }

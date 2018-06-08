@@ -45,7 +45,6 @@ public class ThreatsActivity extends AppCompatActivity {
 
         Picasso.with(getBaseContext()).load(url).into(imageUrlView);
 
-
         getThreats(name);
     }
 
@@ -85,6 +84,9 @@ public class ThreatsActivity extends AppCompatActivity {
 
     public void onBackPressed(){
         Intent myIntent = new Intent(ThreatsActivity.this, MainActivity.class);
+        Bundle b = new Bundle();
+        b.putString("source", "threats");
+        myIntent.putExtras(b);
         startActivity(myIntent);
         finish();
     }

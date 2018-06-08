@@ -9,18 +9,11 @@
 
     <ImageView
         android:id="@+id/imageUrlView"
-        android:layout_width="397dp"
-        android:layout_height="212dp"
-        android:layout_marginBottom="98dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:src="#AAA"
-        app:layout_constraintBottom_toTopOf="@string/description_title"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+    />
 
     <TextView
         android:id="@+id/nameView"
