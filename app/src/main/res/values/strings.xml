@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Wild Planete Nature</string>
     <string name="homepage_WelcomeText">To know, Love and Protect animals from the world</string>
-    <string name="placeholder_search_animal">Animal scientific or common name</string>
+    <string name="placeholder_search_animal">Scientific or Common name</string>
     <string name="activity_animal_name">Name</string>
     <string name="activity_animal_scientific_name">Scientific name</string>
     <string name="classification_title">Classification</string>
@@ -13,6 +13,6 @@
     <string name="threat_button">threats</string>
     <string name="not_found_animal">Sorry, unknown animal</string>
     <string name="noThreats">No Threats for this animal</string>
-    <string name="threat_button">threat</string>
+    <string name="threat_button">threats</string>
     <string name="not_found_animal">Sorry, unknown animal</string>
 </resources>
