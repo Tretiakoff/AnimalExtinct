@@ -22,6 +22,7 @@ import com.squareup.picasso.Picasso;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.Url;
 
 public class AnimalActivity extends AppCompatActivity {
 
@@ -51,6 +52,7 @@ public class AnimalActivity extends AppCompatActivity {
                 Intent myIntent = new Intent(AnimalActivity.this, ThreatsActivity.class);
                 Bundle b = new Bundle();
                 b.putString("name", scientificNameView.getText().toString());
+                b.putString("url", imageUrl.toString());
                 myIntent.putExtras(b);
                 startActivity(myIntent);
                 finish();
@@ -73,14 +75,12 @@ public class AnimalActivity extends AppCompatActivity {
                     if (doc == null){
                         return;
                     }
-                    String imageUrl = doc.getThumbnailURL();
-                    String url = doc.getImageUrl(imageUrl);
+                    imageUrl = doc.getThumbnailURL();
+                    imageUrl = doc.getImageUrl(imageUrl);
 
                     getDescription(doc.getNameCommon());
-
-                    imageUrl = url;
                     imageView = findViewById(R.id.imageView);
-                    Picasso.with(getBaseContext()).load(url).into(imageView);
+                    Picasso.with(getBaseContext()).load(imageUrl).into(imageView);
 
                     enNameView =  findViewById(R.id.enName);
                     enNameView.setText(doc.getNameCommon());

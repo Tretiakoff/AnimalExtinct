@@ -7,6 +7,21 @@
     tools:context="com.example.tretiakoff.animal_extinct.Activity.ThreatsActivity"
     android:background="@drawable/detail_nimal_background">
 
+    <ImageView
+        android:id="@+id/imageUrlView"
+        android:layout_width="397dp"
+        android:layout_height="212dp"
+        android:layout_marginBottom="98dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:src="#AAA"
+        app:layout_constraintBottom_toTopOf="@string/description_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/nameView"
         android:layout_width="wrap_content"
@@ -46,6 +61,4 @@
 
         </LinearLayout>
     </ScrollView>
-
-
 </android.support.constraint.ConstraintLayout>

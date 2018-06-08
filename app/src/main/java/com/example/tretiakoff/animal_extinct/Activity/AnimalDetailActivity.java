@@ -79,6 +79,7 @@ public class AnimalDetailActivity extends AppCompatActivity {
                 Intent myIntent = new Intent(AnimalDetailActivity.this, ThreatsActivity.class);
                 Bundle b = new Bundle();
                 b.putString("name", scientificNameView.getText().toString());
+                b.putString("url", url);
                 myIntent.putExtras(b);
                 startActivity(myIntent);
                 finish();

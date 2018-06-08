@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.tretiakoff.animal_extinct.API.Arkive;
@@ -27,15 +28,23 @@ public class ThreatsActivity extends AppCompatActivity {
 
     TextView nameView;
     TextView threatsView;
+    ImageView imageUrlView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_threats);
         Bundle b = getIntent().getExtras();
         String name = b.getString("name");
+        String url = b.getString("url");
+        Log.d("URL", url);
 
         nameView = findViewById(R.id.nameView);
         threatsView = findViewById(R.id.threatsView);
+        imageUrlView = findViewById(R.id.imageUrlView);
+
+        Picasso.with(getBaseContext()).load(url).into(imageUrlView);
+
 
         getThreats(name);
     }
