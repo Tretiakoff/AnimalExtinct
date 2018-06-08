@@ -61,7 +61,7 @@ public class ThreatsActivity extends AppCompatActivity {
                     nameView.setText(result.getName());
 
                     if (result.getResult().size() == 0){
-                        threatsView.setText("@string/noThreats");
+                        threatsView.setText(getResources().getString(R.string.noThreats));
                         return;
 
                     }

@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         if(b != null) {
             source = b.getString("source");
             if (source.equals("noResult")) {
-                noResultMsgView.setText(@string/not_found_animal);
+                noResultMsgView.setText(getResources().getString(R.string.not_found_animal));
             }
         }
         searchText = (EditText)findViewById(R.id.animalSearchText);

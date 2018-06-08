@@ -10,9 +10,8 @@
     <string name="description_title">Description</string>
     <string name="description">Description</string>
     <string name="icun_title">Extinguishing Levels</string>
-    <string name="threat_button">threats</string>
-    <string name="not_found_animal">Sorry, unknown animal</string>
     <string name="noThreats">No Threats for this animal</string>
     <string name="threat_button">threats</string>
     <string name="not_found_animal">Sorry, unknown animal</string>
+    <string name="no_list_result">No result for this research.</string>
 </resources>

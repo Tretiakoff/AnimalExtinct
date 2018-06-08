@@ -30,7 +30,7 @@ public class SearchFiltersActivity extends AppCompatActivity {
         noResultMsgView = findViewById(R.id.noResultMsg);
 
         if (source.equals("noResult") == true) {
-            noResultMsgView.setText("No results for this research.");
+            noResultMsgView.setText(getResources().getString(R.string.no_list_result));
         }
 
         searchBtn = findViewById(R.id.filterSearchBtn);
