@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.tretiakoff.animal_extinct.Activity.AnimalActivity"
-    tools:layout_editor_absoluteY="81dp">
+    tools:layout_editor_absoluteY="81dp"
+    android:background="@drawable/detail_nimal_background">
 
 
     <ImageView
@@ -18,7 +19,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:src="#AAA"
-        app:layout_constraintBottom_toTopOf="@+id/description"
+        app:layout_constraintBottom_toTopOf="@string/description_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -48,10 +49,9 @@
         tools:text="@string/activity_animal_scientific_name" />
 
     <ScrollView
-        android:id="@+id/scrollView2"
+        android:id="@+id/scrollView"
         android:layout_width="368dp"
         android:layout_height="280dp"
-        android:layout_marginBottom="8dp"
         android:layout_marginEnd="32dp"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="32dp"
@@ -68,6 +68,15 @@
 
 
             <TextView
+                android:id="@+id/classification_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/classification_title"
+                android:textAllCaps="true"
+                android:textColor="#A8C12D"
+                app:fontFamily="@font/roboto_bold" />
+
+            <TextView
                 android:id="@+id/classificaition"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -76,6 +85,16 @@
                 tools:layout_editor_absoluteX="211dp"
                 tools:layout_editor_absoluteY="162dp"
                 tools:text="@string/classification_texte" />
+
+
+            <TextView
+                android:id="@+id/icun"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/icun_title"
+                android:textAllCaps="true"
+                android:textColor="#A8C12D"
+                app:fontFamily="@font/roboto_bold" />
 
             <TextView
                 android:id="@+id/IUCNStatus"
@@ -86,6 +105,17 @@
                 tools:layout_editor_absoluteX="75dp"
                 tools:layout_editor_absoluteY="202dp"
                 tools:text="@string/ICUNStatus" />
+
+
+            <TextView
+                android:id="@+id/description_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/description_title"
+                android:textAllCaps="true"
+                android:textColor="#A8C12D"
+                app:fontFamily="@font/roboto_bold" />
+
 
             <TextView
                 android:id="@+id/description"
@@ -98,5 +128,7 @@
 
         </LinearLayout>
     </ScrollView>
+
+
 
 </android.support.constraint.ConstraintLayout>
