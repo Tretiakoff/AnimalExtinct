@@ -98,7 +98,6 @@ public class AnimalActivity extends AppCompatActivity {
         call.enqueue(new Callback<WikipediaResult>() {
             @Override
             public void onResponse(Call<WikipediaResult> call, Response<WikipediaResult> response) {
-                Log.d("RESP", response.body().toString());
                 if (response.code() == 200) {
                     WikipediaResult result = response.body();
                     WikipediaSinglePage page = result.getQuery().getWikipediaSinglePageResult();
@@ -106,8 +105,6 @@ public class AnimalActivity extends AppCompatActivity {
                     if (page == null) {
                         return;
                     }
-
-                    Log.d("CONTENT", result.getQuery().getWikipediaSinglePageResult().getExtract());
                     String content = result.getQuery().getWikipediaSinglePageResult().getExtract();
 
                     descriptionView = findViewById(R.id.description);

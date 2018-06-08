@@ -33,7 +33,8 @@
             android:resource="@array/preloaded_fonts" />
 
         <activity android:name=".Activity.AnimalListActivity" />
-        <activity android:name=".Activity.SearchFiltersActivity"></activity>
+        <activity android:name=".Activity.SearchFiltersActivity" />
+        <activity android:name=".Activity.AnimalDetailActivity"></activity>
     </application>
 
 </manifest>

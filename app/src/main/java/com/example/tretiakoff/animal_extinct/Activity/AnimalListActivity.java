@@ -24,10 +24,19 @@ import retrofit2.Response;
 
 public class AnimalListActivity extends AppCompatActivity implements AnimalRecyclerViewAdapter.OnTopRatedClickListener {
     private AnimalRecyclerViewAdapter mAnimalRecyclerViewAdapter;
+    String status;
+    String location;
+    String family;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle b = getIntent().getExtras();
+
+        status = b.getString("status");
+        location = b.getString("location");
+        family = b.getString("family");
+
         setContentView(R.layout.activity_animal_list);
         RecyclerView mRecyclerView = findViewById(R.id.topRatedRecyclerView);
 
@@ -40,21 +49,57 @@ public class AnimalListActivity extends AppCompatActivity implements AnimalRecyc
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d("OOHOHO","AAAA");
-//        getAnimalListByLocation();
-//        getAnimalListByLocationAndStatus();
-//        getAnimalsByLocationAndFamily();
-//        getAnimalListByFamilyAndStatus();
+
+
+        if (status.equals("All"))
+        {
+            if (location.equals("All"))
+            {
+                if(family.equals("All"))
+                {
+                    getAll();
+                }
+                else
+                {
+                    getAnimalListByFamily(family);
+                }
+            }
+            else if(family.equals("All"))
+            {
+                getAnimalListByLocation(location);
+            }
+            else
+            {
+                getAnimalsByLocationAndFamily(location, family);
+            }
+        }
+        else
+        {
+            if (location.equals("All"))
+            {
+                if(family.equals("All"))
+                {
+                    getAnimalListByStatus(status);
+                }
+                else
+                {
+                    getAnimalListByFamilyAndStatus(status, family);
+                }
+            }
+            else if(family.equals("All"))
+            {
+                getAnimalListByLocationAndStatus(status,location);
+            }
+            else
+            {
+                getAnimalListByAllParams(status, location, family);
+            }
+        }
+
     }
 
-    private void getAnimalListByAllParams() {
+    private void getAnimalListByAllParams(String status, String location, String family) {
         ArkiveFilters service = Client.getArkiveFiltersClient();
-
-        String status = "Vulnerable";
-        String location = "USA";
-        String family = "Mammals";
-
-
 
         retrofit2.Call call = service.getAnimals(30, "doctype:species", "score desc", "{!tag=ag}IUCNStatus:"+status+"{!tag=ag}geographicLocation:"+location+"{!tag=ag}accessionsGroup:"+family, "json");
         call.enqueue(new Callback<ArkiveResult>() {
@@ -65,14 +110,16 @@ public class AnimalListActivity extends AppCompatActivity implements AnimalRecyc
                     ArkiveResult result = response.body();
                     ArrayList<ArkiveResponseDoc> results = result.getResponse().getDocs();
 
+                    if (results == null){
+                        noResultMessage();
+                    }
+
                     ArrayList<ArkiveResponseDoc> resultInDifferentOrder = new ArrayList<ArkiveResponseDoc>();
-                    Log.d("resultSize", String.valueOf(results.size()));
                     int security = 0;
                     while(resultInDifferentOrder.size() < results.size() && security < 1000)
                     {
                         Random r = new Random();
                         int randomIndex = r.nextInt(results.size());
-                        Log.d("randomIndex", String.valueOf(randomIndex));
                         ArkiveResponseDoc randomElement = results.get(randomIndex);
                         if(!resultInDifferentOrder.contains(randomElement))
                         {
@@ -81,10 +128,6 @@ public class AnimalListActivity extends AppCompatActivity implements AnimalRecyc
                         }
                         security++;
                     }
-                    Log.d("resultMelangeSize", String.valueOf(resultInDifferentOrder.size()));
-
-
-
                     mAnimalRecyclerViewAdapter.setTopRatedList(resultInDifferentOrder);
                     mAnimalRecyclerViewAdapter.notifyDataSetChanged();
                 } else {
@@ -102,10 +145,8 @@ public class AnimalListActivity extends AppCompatActivity implements AnimalRecyc
 
     }
 
-    private void getAnimalListByStatus() {
+    private void getAnimalListByStatus(String status) {
         ArkiveFilters service = Client.getArkiveFiltersClient();
-
-        String status = "Vulnerable";
 
         retrofit2.Call call = service.getAnimals(30, "doctype:species", "score desc", "{!tag=ag}IUCNStatus:"+status, "json");
         call.enqueue(new Callback<ArkiveResult>() {
@@ -115,15 +156,15 @@ public class AnimalListActivity extends AppCompatActivity implements AnimalRecyc
                 if (response.code() == 200) {
                     ArkiveResult result = response.body();
                     ArrayList<ArkiveResponseDoc> results = result.getResponse().getDocs();
-
+                    if (results == null){
+                        noResultMessage();
+                    }
                     ArrayList<ArkiveResponseDoc> resultInDifferentOrder = new ArrayList<ArkiveResponseDoc>();
-                    Log.d("resultSize", String.valueOf(results.size()));
                     int security = 0;
                     while(resultInDifferentOrder.size() < results.size() && security < 1000)
                     {
                         Random r = new Random();
                         int randomIndex = r.nextInt(results.size());
-                        Log.d("randomIndex", String.valueOf(randomIndex));
                         ArkiveResponseDoc randomElement = results.get(randomIndex);
                         if(!resultInDifferentOrder.contains(randomElement))
                         {
@@ -132,14 +173,9 @@ public class AnimalListActivity extends AppCompatActivity implements AnimalRecyc
                         }
                         security++;
                     }
-                    Log.d("resultMelangeSize", String.valueOf(resultInDifferentOrder.size()));
-
-
-
                     mAnimalRecyclerViewAdapter.setTopRatedList(resultInDifferentOrder);
                     mAnimalRecyclerViewAdapter.notifyDataSetChanged();
                 } else {
-                    Log.d("error", "error");
                     return;
                 }
             }
@@ -153,10 +189,8 @@ public class AnimalListActivity extends AppCompatActivity implements AnimalRecyc
 
     }
 
-    private void getAnimalListByFamily() {
+    private void getAnimalListByFamily(String family) {
         ArkiveFilters service = Client.getArkiveFiltersClient();
-
-        String family = "Mammals";
 
         retrofit2.Call call = service.getAnimals(30, "doctype:species", "score desc", "{!tag=ag}accessionsGroup:"+family, "json");
         call.enqueue(new Callback<ArkiveResult>() {
@@ -166,15 +200,15 @@ public class AnimalListActivity extends AppCompatActivity implements AnimalRecyc
                 if (response.code() == 200) {
                     ArkiveResult result = response.body();
                     ArrayList<ArkiveResponseDoc> results = result.getResponse().getDocs();
-
+                    if (results == null){
+                        noResultMessage();
+                    }
                     ArrayList<ArkiveResponseDoc> resultInDifferentOrder = new ArrayList<ArkiveResponseDoc>();
-                    Log.d("resultSize", String.valueOf(results.size()));
                     int security = 0;
                     while(resultInDifferentOrder.size() < results.size() && security < 1000)
                     {
                         Random r = new Random();
                         int randomIndex = r.nextInt(results.size());
-                        Log.d("randomIndex", String.valueOf(randomIndex));
                         ArkiveResponseDoc randomElement = results.get(randomIndex);
                         if(!resultInDifferentOrder.contains(randomElement))
                         {
@@ -183,10 +217,6 @@ public class AnimalListActivity extends AppCompatActivity implements AnimalRecyc
                         }
                         security++;
                     }
-                    Log.d("resultMelangeSize", String.valueOf(resultInDifferentOrder.size()));
-
-
-
                     mAnimalRecyclerViewAdapter.setTopRatedList(resultInDifferentOrder);
                     mAnimalRecyclerViewAdapter.notifyDataSetChanged();
                 } else {
@@ -204,10 +234,8 @@ public class AnimalListActivity extends AppCompatActivity implements AnimalRecyc
 
     }
 
-    private void getAnimalListByLocation() {
+    private void getAnimalListByLocation(String location) {
         ArkiveFilters service = Client.getArkiveFiltersClient();
-
-        String location = "USA";
 
         retrofit2.Call call = service.getAnimals(30, "doctype:species", "score desc", "{!tag=ag}geographicLocation:"+location, "json");
         call.enqueue(new Callback<ArkiveResult>() {
@@ -217,15 +245,15 @@ public class AnimalListActivity extends AppCompatActivity implements AnimalRecyc
                 if (response.code() == 200) {
                     ArkiveResult result = response.body();
                     ArrayList<ArkiveResponseDoc> results = result.getResponse().getDocs();
-
+                    if (results == null){
+                        noResultMessage();
+                    }
                     ArrayList<ArkiveResponseDoc> resultInDifferentOrder = new ArrayList<ArkiveResponseDoc>();
-                    Log.d("resultSize", String.valueOf(results.size()));
                     int security = 0;
                     while(resultInDifferentOrder.size() < results.size() && security < 1000)
                     {
                         Random r = new Random();
                         int randomIndex = r.nextInt(results.size());
-                        Log.d("randomIndex", String.valueOf(randomIndex));
                         ArkiveResponseDoc randomElement = results.get(randomIndex);
                         if(!resultInDifferentOrder.contains(randomElement))
                         {
@@ -234,10 +262,6 @@ public class AnimalListActivity extends AppCompatActivity implements AnimalRecyc
                         }
                         security++;
                     }
-                    Log.d("resultMelangeSize", String.valueOf(resultInDifferentOrder.size()));
-
-
-
                     mAnimalRecyclerViewAdapter.setTopRatedList(resultInDifferentOrder);
                     mAnimalRecyclerViewAdapter.notifyDataSetChanged();
                 } else {
@@ -255,12 +279,51 @@ public class AnimalListActivity extends AppCompatActivity implements AnimalRecyc
 
     }
 
-    private void getAnimalListByLocationAndStatus() {
+    private void getAll() {
         ArkiveFilters service = Client.getArkiveFiltersClient();
 
-        String status = "Vulnerable";
-        String location = "USA";
+        retrofit2.Call call = service.getAnimals(30, "doctype:species", "score desc", "", "json");
+        call.enqueue(new Callback<ArkiveResult>() {
 
+            @Override
+            public void onResponse(Call<ArkiveResult> call, Response<ArkiveResult> response) {
+                if (response.code() == 200) {
+                    ArkiveResult result = response.body();
+                    ArrayList<ArkiveResponseDoc> results = result.getResponse().getDocs();
+
+                    ArrayList<ArkiveResponseDoc> resultInDifferentOrder = new ArrayList<ArkiveResponseDoc>();
+                    int security = 0;
+                    while(resultInDifferentOrder.size() < results.size() && security < 1000)
+                    {
+                        Random r = new Random();
+                        int randomIndex = r.nextInt(results.size());
+                        ArkiveResponseDoc randomElement = results.get(randomIndex);
+                        if(!resultInDifferentOrder.contains(randomElement))
+                        {
+                            resultInDifferentOrder.add(randomElement);
+
+                        }
+                        security++;
+                    }
+                    mAnimalRecyclerViewAdapter.setTopRatedList(resultInDifferentOrder);
+                    mAnimalRecyclerViewAdapter.notifyDataSetChanged();
+                } else {
+                    Log.d("error", "error");
+                    return;
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                Log.d("ERROR", t.getMessage());
+                return;
+            }
+        });
+
+    }
+
+    private void getAnimalListByLocationAndStatus(String status, String location) {
+        ArkiveFilters service = Client.getArkiveFiltersClient();
 
         retrofit2.Call call = service.getAnimals(30, "doctype:species", "score desc", "{!tag=ag}IUCNStatus:"+status+"{!tag=ag}geographicLocation:"+location, "json");
         call.enqueue(new Callback<ArkiveResult>() {
@@ -270,15 +333,16 @@ public class AnimalListActivity extends AppCompatActivity implements AnimalRecyc
                 if (response.code() == 200) {
                     ArkiveResult result = response.body();
                     ArrayList<ArkiveResponseDoc> results = result.getResponse().getDocs();
-
+                    Log.d("SIZE", String.valueOf(results.size()));
+                    if (results.size() == 0){
+                        noResultMessage();
+                    }
                     ArrayList<ArkiveResponseDoc> resultInDifferentOrder = new ArrayList<ArkiveResponseDoc>();
-                    Log.d("resultSize", String.valueOf(results.size()));
                     int security = 0;
                     while(resultInDifferentOrder.size() < results.size() && security < 1000)
                     {
                         Random r = new Random();
                         int randomIndex = r.nextInt(results.size());
-                        Log.d("randomIndex", String.valueOf(randomIndex));
                         ArkiveResponseDoc randomElement = results.get(randomIndex);
                         if(!resultInDifferentOrder.contains(randomElement))
                         {
@@ -287,10 +351,6 @@ public class AnimalListActivity extends AppCompatActivity implements AnimalRecyc
                         }
                         security++;
                     }
-                    Log.d("resultMelangeSize", String.valueOf(resultInDifferentOrder.size()));
-
-
-
                     mAnimalRecyclerViewAdapter.setTopRatedList(resultInDifferentOrder);
                     mAnimalRecyclerViewAdapter.notifyDataSetChanged();
                 } else {
@@ -308,12 +368,8 @@ public class AnimalListActivity extends AppCompatActivity implements AnimalRecyc
 
     }
 
-    private void getAnimalsByLocationAndFamily() {
+    private void getAnimalsByLocationAndFamily(String location, String family) {
         ArkiveFilters service = Client.getArkiveFiltersClient();
-
-        String location = "USA";
-        String family = "Mammals";
-
 
         retrofit2.Call call = service.getAnimals(30, "doctype:species", "score desc", "{!tag=ag}geographicLocation:"+location+"{!tag=ag}accessionsGroup:"+family, "json");
         call.enqueue(new Callback<ArkiveResult>() {
@@ -323,15 +379,15 @@ public class AnimalListActivity extends AppCompatActivity implements AnimalRecyc
                 if (response.code() == 200) {
                     ArkiveResult result = response.body();
                     ArrayList<ArkiveResponseDoc> results = result.getResponse().getDocs();
-
+                    if (results == null){
+                        noResultMessage();
+                    }
                     ArrayList<ArkiveResponseDoc> resultInDifferentOrder = new ArrayList<ArkiveResponseDoc>();
-                    Log.d("resultSize", String.valueOf(results.size()));
                     int security = 0;
                     while(resultInDifferentOrder.size() < results.size() && security < 1000)
                     {
                         Random r = new Random();
                         int randomIndex = r.nextInt(results.size());
-                        Log.d("randomIndex", String.valueOf(randomIndex));
                         ArkiveResponseDoc randomElement = results.get(randomIndex);
                         if(!resultInDifferentOrder.contains(randomElement))
                         {
@@ -340,10 +396,6 @@ public class AnimalListActivity extends AppCompatActivity implements AnimalRecyc
                         }
                         security++;
                     }
-                    Log.d("resultMelangeSize", String.valueOf(resultInDifferentOrder.size()));
-
-
-
                     mAnimalRecyclerViewAdapter.setTopRatedList(resultInDifferentOrder);
                     mAnimalRecyclerViewAdapter.notifyDataSetChanged();
                 } else {
@@ -361,12 +413,8 @@ public class AnimalListActivity extends AppCompatActivity implements AnimalRecyc
 
     }
 
-    private void getAnimalListByFamilyAndStatus() {
+    private void getAnimalListByFamilyAndStatus(String status, String family) {
         ArkiveFilters service = Client.getArkiveFiltersClient();
-
-        String status = "Vulnerable";
-        String family = "Mammals";
-
 
         retrofit2.Call call = service.getAnimals(30, "doctype:species", "score desc", "{!tag=ag}IUCNStatus:"+status+"{!tag=ag}accessionsGroup:"+family, "json");
         call.enqueue(new Callback<ArkiveResult>() {
@@ -378,13 +426,11 @@ public class AnimalListActivity extends AppCompatActivity implements AnimalRecyc
                     ArrayList<ArkiveResponseDoc> results = result.getResponse().getDocs();
 
                     ArrayList<ArkiveResponseDoc> resultInDifferentOrder = new ArrayList<ArkiveResponseDoc>();
-                    Log.d("resultSize", String.valueOf(results.size()));
                     int security = 0;
                     while(resultInDifferentOrder.size() < results.size() && security < 1000)
                     {
                         Random r = new Random();
                         int randomIndex = r.nextInt(results.size());
-                        Log.d("randomIndex", String.valueOf(randomIndex));
                         ArkiveResponseDoc randomElement = results.get(randomIndex);
                         if(!resultInDifferentOrder.contains(randomElement))
                         {
@@ -393,10 +439,6 @@ public class AnimalListActivity extends AppCompatActivity implements AnimalRecyc
                         }
                         security++;
                     }
-                    Log.d("resultMelangeSize", String.valueOf(resultInDifferentOrder.size()));
-
-
-
                     mAnimalRecyclerViewAdapter.setTopRatedList(resultInDifferentOrder);
                     mAnimalRecyclerViewAdapter.notifyDataSetChanged();
                 } else {
@@ -415,7 +457,10 @@ public class AnimalListActivity extends AppCompatActivity implements AnimalRecyc
     }
 
     public void onBackPressed(){
-        Intent myIntent = new Intent(AnimalListActivity.this, MainActivity.class);
+        Intent myIntent = new Intent(AnimalListActivity.this, SearchFiltersActivity.class);
+        Bundle b = new Bundle();
+        b.putString("source", "mainActivity");
+        myIntent.putExtras(b);
         startActivity(myIntent);
         finish();
     }
@@ -423,6 +468,26 @@ public class AnimalListActivity extends AppCompatActivity implements AnimalRecyc
 
     @Override
     public void onTopRatedClick(ArkiveResponseDoc animal) {
+        Intent myIntent = new Intent(AnimalListActivity.this, AnimalDetailActivity.class);
+        Bundle b = new Bundle();
+        b.putString("imageUrl", animal.getThumbnailURL());
+        b.putString("enName", animal.getNameCommon());
+        b.putString("scientificName", animal.getNameScientific());
+        b.putString("status", animal.getiUCNStatus());
+        b.putString("initialStatus", status);
+        b.putString("initialLocation", location);
+        b.putString("initialFamily", family);
+        myIntent.putExtras(b);
+        startActivity(myIntent);
+        finish();
+    }
 
+    public void noResultMessage() {
+        Intent myIntent = new Intent(AnimalListActivity.this, SearchFiltersActivity.class);
+        Bundle b = new Bundle();
+        b.putString("source", "noResult");
+        myIntent.putExtras(b);
+        startActivity(myIntent);
+        finish();
     }
 }

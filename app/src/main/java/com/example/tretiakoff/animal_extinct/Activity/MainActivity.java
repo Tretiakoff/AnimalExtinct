@@ -30,8 +30,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent myIntent = new Intent(MainActivity.this, AnimalActivity.class);
                 Bundle b = new Bundle();
-                b.putString("name", searchText.getText().toString()); //Your id
-                myIntent.putExtras(b); //Put your id to your next Intent
+                b.putString("name", searchText.getText().toString());
+                myIntent.putExtras(b);
                 startActivity(myIntent);
                 finish();
             }
@@ -40,7 +40,10 @@ public class MainActivity extends AppCompatActivity {
         listBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent myIntent = new Intent(MainActivity.this, AnimalListActivity.class);
+                Intent myIntent = new Intent(MainActivity.this, SearchFiltersActivity.class);
+                Bundle b = new Bundle();
+                b.putString("source", "main");
+                myIntent.putExtras(b);
                 startActivity(myIntent);
                 finish();
             }
